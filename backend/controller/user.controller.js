@@ -99,10 +99,5 @@ const getProfile = async (req, res) => {
 
 
 
-
-
-
-
-
         
 export { register, login, logout, getProfile };
