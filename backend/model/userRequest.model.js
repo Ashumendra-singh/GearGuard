@@ -10,10 +10,11 @@ const userRequestSchema = new Schema(
             ref: 'User',
             required: false,
         },
-        requestProcessor:{
+        assigned:{
             type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
             required: false,
-        }
+        },
         requestType: {
             type: String,
             required: false,
@@ -36,7 +37,12 @@ const userRequestSchema = new Schema(
         duration:{
             type: Number,
             required: false,
-        }
+        },
+        status: {
+            type: String,
+            enum: ['new', 'in-progress', 'completed'],
+            default: 'new',
+        },
     },
     {
         timestamps: true,
