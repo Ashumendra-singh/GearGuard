@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import User from '../model/user.model.js';
 import jwt from 'jsonwebtoken';
+import Request from '../model/userRequest.model.js';
 
 const register = async (req, res) => {
     try {
@@ -96,4 +97,38 @@ const getProfile = async (req, res) => {
     }
 };
 
-export { register, login, logout, getProfile };
+export const raiseRequest = async (req, res) => {
+    try {
+        const { assetId, title, description, scheduleDate } = req.body;
+
+        if (!req.userId) {
+            return res.status(401).json({ message: 'Unauthorized.' });
+        }
+        if (!assetId || !title || !description) {
+            return res.status(400).json({ message: 'Asset, title, and description are required.' });
+        }
+
+        const request = await Request.create({
+            user: req.userId,
+            equipment: assetId,
+            title,
+            description,
+            scheduleDate,
+        });
+
+        return res.status(201).json({
+            message: 'Request raised successfully.',
+            request,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+};
+
+
+
+
+
+        
+export { register, login, logout, getProfile, raiseRequest };

@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const { Schema, model } = mongoose;
-const SALT_ROUNDS = 10;
 
 const userSchema = new Schema(
     {
